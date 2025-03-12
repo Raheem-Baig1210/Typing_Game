@@ -46,6 +46,10 @@ class SocketClient {
     return SocketClient.instance;
   }
   
+  public getSocketId(): string | undefined {
+    return this.socket?.id;
+  }
+  
   public connect(): void {
     if (this.socket) return;
     
@@ -132,7 +136,7 @@ class SocketClient {
       }
     } else {
       // Remove all callbacks for this event
-      this.socket.off(event as string);
+      this.socket.off(event);
       this.listeners.delete(event as string);
     }
   }

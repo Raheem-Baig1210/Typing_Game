@@ -72,7 +72,7 @@ export default function MultiplayerModePage() {
     
     socketClient.on('player-left', (data) => {
       setPlayers(data.players);
-      if (data.newHost === socketClient.socket?.id) {
+      if (data.newHost === socketClient.getSocketId()) {
         setIsHost(true);
       }
     });
@@ -250,7 +250,7 @@ export default function MultiplayerModePage() {
                     <div className="flex items-center">
                       <FaUsers className="text-gray-500 mr-2" />
                       <span>{player.name}</span>
-                      {player.id === socketClient.socket?.id && (
+                      {player.id === socketClient.getSocketId() && (
                         <span className="ml-2 text-xs bg-primary-100 text-primary-800 px-2 py-0.5 rounded-full">
                           You
                         </span>
@@ -301,9 +301,9 @@ export default function MultiplayerModePage() {
         renderLobby()
       ) : (
         <>
-          <MultiplayerProgress 
-            players={players} 
-            currentPlayerId={socketClient.socket?.id || ''} 
+          <MultiplayerProgress
+            players={players}
+            currentPlayerId={socketClient.getSocketId() || ''}
           />
           <TypingGame mode="multiplayer" />
         </>

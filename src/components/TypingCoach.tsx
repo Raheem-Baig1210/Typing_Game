@@ -6,19 +6,16 @@ import { FaRobot, FaLightbulb, FaChartLine, FaTimes } from 'react-icons/fa';
 import { useGameStore } from '@/lib/store';
 
 interface TypingCoachProps {
-  isOpen: boolean;
   onClose: () => void;
 }
 
-export default function TypingCoach({ isOpen, onClose }: TypingCoachProps) {
+export default function TypingCoach({ onClose }: TypingCoachProps) {
   const { userStats, errors, accuracy } = useGameStore();
   const [tips, setTips] = useState<string[]>([]);
   const [weakLetters, setWeakLetters] = useState<{ letter: string; errorRate: number }[]>([]);
   
   // Generate tips based on user performance
   useEffect(() => {
-    if (!isOpen) return;
-    
     const newTips: string[] = [];
     
     // Add tips based on accuracy
@@ -52,9 +49,7 @@ export default function TypingCoach({ isOpen, onClose }: TypingCoachProps) {
     ];
     
     setWeakLetters(mockWeakLetters);
-  }, [isOpen, accuracy, userStats.wpm]);
-  
-  if (!isOpen) return null;
+  }, [accuracy, userStats.wpm]);
   
   return (
     <motion.div
