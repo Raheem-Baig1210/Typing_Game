@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { hash } from "bcrypt";
 import prisma from "@/lib/prisma";
 
+// Add export for dynamic route handling
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     const { name, email, password } = await req.json();

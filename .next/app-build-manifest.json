@@ -50,7 +50,7 @@
       "static/chunks/648-8aaef6dbb9a7d271.js",
       "static/chunks/app/auth/signup/page-e542e7348181825d.js"
     ],
-    "/game/classic/page": [
+    "/game/custom/page": [
       "static/chunks/webpack-a0dca2a875d56a4a.js",
       "static/chunks/fd9d1056-1f2deaaf5f9ff675.js",
       "static/chunks/117-c1b2596333ae95e6.js",
@@ -60,7 +60,7 @@
       "static/chunks/648-8aaef6dbb9a7d271.js",
       "static/chunks/605-be22ddad3b8807ca.js",
       "static/chunks/806-6fc9fe15e1f0c222.js",
-      "static/chunks/app/game/classic/page-dea359613b07d312.js"
+      "static/chunks/app/game/custom/page-0cd5c7fded6f761a.js"
     ],
     "/game/multiplayer/page": [
       "static/chunks/webpack-a0dca2a875d56a4a.js",
@@ -74,18 +74,6 @@
       "static/chunks/685-19ad6d000d2ba282.js",
       "static/chunks/806-6fc9fe15e1f0c222.js",
       "static/chunks/app/game/multiplayer/page-a6b07b166b058c41.js"
-    ],
-    "/game/custom/page": [
-      "static/chunks/webpack-a0dca2a875d56a4a.js",
-      "static/chunks/fd9d1056-1f2deaaf5f9ff675.js",
-      "static/chunks/117-c1b2596333ae95e6.js",
-      "static/chunks/main-app-1bdec81397574767.js",
-      "static/chunks/9081a741-fc79ff73aba10cb7.js",
-      "static/chunks/387-d324e78a60939034.js",
-      "static/chunks/648-8aaef6dbb9a7d271.js",
-      "static/chunks/605-be22ddad3b8807ca.js",
-      "static/chunks/806-6fc9fe15e1f0c222.js",
-      "static/chunks/app/game/custom/page-0cd5c7fded6f761a.js"
     ],
     "/game/survival/page": [
       "static/chunks/webpack-a0dca2a875d56a4a.js",
@@ -129,6 +117,18 @@
       "static/chunks/648-8aaef6dbb9a7d271.js",
       "static/chunks/605-be22ddad3b8807ca.js",
       "static/chunks/app/profile/page-fec77b139f672c27.js"
+    ],
+    "/game/classic/page": [
+      "static/chunks/webpack-a0dca2a875d56a4a.js",
+      "static/chunks/fd9d1056-1f2deaaf5f9ff675.js",
+      "static/chunks/117-c1b2596333ae95e6.js",
+      "static/chunks/main-app-1bdec81397574767.js",
+      "static/chunks/9081a741-fc79ff73aba10cb7.js",
+      "static/chunks/387-d324e78a60939034.js",
+      "static/chunks/648-8aaef6dbb9a7d271.js",
+      "static/chunks/605-be22ddad3b8807ca.js",
+      "static/chunks/806-6fc9fe15e1f0c222.js",
+      "static/chunks/app/game/classic/page-dea359613b07d312.js"
     ],
     "/settings/page": [
       "static/chunks/webpack-a0dca2a875d56a4a.js",
