@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "server": "node server.js",
-    "start:all": "node start.js"
+    "start:all": "node start.js",
+    "favicon:help": "node scripts/generate-favicon.js",
+    "prepare:vercel": "node scripts/prepare-for-vercel.js"
   },
   "dependencies": {
     "@prisma/client": "^6.5.0",

@@ -1,12 +1,9 @@
 import { NextAuthOptions } from "next-auth";
-import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import prisma from "@/lib/prisma";
-import { authOptions } from "@/lib/auth";
 
-// Define authOptions but don't export it directly from the route file
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -69,10 +66,4 @@ const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
-};
-
-// Create the handler with the authOptions
-const handler = NextAuth(authOptions);
-
-// Export the handler functions
-export { handler as GET, handler as POST }; 
+}; 

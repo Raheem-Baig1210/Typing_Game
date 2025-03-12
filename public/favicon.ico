@@ -1,5 +1,11 @@
 <!-- 
 This is a placeholder for favicon.ico
-In a real project, you would need to convert the SVG to ICO format using a tool
-and place the binary file here.
+Since we cannot create binary files directly through text editing,
+please use one of the following methods to create a proper favicon.ico:
+
+1. Use the script in scripts/generate-favicon.js for instructions
+2. Use an online converter like favicon.io to convert the SVG to ICO
+3. Use a tool like ImageMagick to convert the SVG to ICO
+
+Until then, this placeholder file will be used, but browsers may not display it correctly.
 --> 

@@ -1,6 +1,6 @@
 import '@/styles/globals.css';
 import { Inter, Roboto_Mono } from 'next/font/google';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import Providers from './providers';
 import Navbar from '@/components/Navbar';
 
@@ -29,6 +29,9 @@ export const metadata: Metadata = {
     apple: { url: '/app-icon.svg', sizes: '512x512', type: 'image/svg+xml' },
   },
   manifest: '/manifest.json',
+};
+
+export const viewport: Viewport = {
   themeColor: '#0ea5e9',
 };
 

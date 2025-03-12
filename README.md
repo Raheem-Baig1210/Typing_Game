@@ -64,14 +64,24 @@ npm install
 yarn install
 ```
 
-3. Run the development server
+3. Generate favicon (optional)
+```bash
+# Run the script to see instructions for generating favicon
+node scripts/generate-favicon.js
+
+# Or use an online converter like favicon.io to convert the SVG files in the public folder
+```
+
+4. Run the development server
 ```bash
 npm run dev
 # or
 yarn dev
+# or
+npm run start:all # to start both Next.js app and Socket.io server
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## Project Structure
 
@@ -111,6 +121,35 @@ typing-game/
 - Additional game modes (e.g., code typing, language-specific)
 - Mobile app version
 - Integration with typing test APIs
+
+## Deployment
+
+### Vercel Deployment
+
+To prepare for deployment to Vercel, run:
+
+```bash
+npm run prepare:vercel
+```
+
+This script will provide a checklist of things to verify before deploying to Vercel, including:
+
+1. Environment variables setup
+2. Database configuration
+3. Socket.io server deployment options
+4. File updates needed for production
+5. Pre-deployment checks
+6. Deployment steps
+
+The project includes a `vercel.json` configuration file with recommended settings for:
+- Build and install commands
+- Environment variables (update these with your actual URLs)
+- Security headers
+- Caching policies for static assets
+
+### Socket.io Server
+
+For the multiplayer functionality to work in production, you'll need to deploy the Socket.io server separately or use Vercel Pro with WebSockets support.
 
 ## License
 

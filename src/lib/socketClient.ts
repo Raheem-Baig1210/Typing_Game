@@ -49,12 +49,15 @@ class SocketClient {
   public connect(): void {
     if (this.socket) return;
     
+    // Get the Socket.io server URL from environment variables or use default
+    const socketUrl = process.env.NEXT_PUBLIC_SOCKET_URL || 'http://localhost:3001';
+    
     // Connect to the Socket.io server
-    this.socket = io('http://localhost:3001');
+    this.socket = io(socketUrl);
     
     // Log connection status
     this.socket.on('connect', () => {
-      console.log('Connected to Socket.io server');
+      console.log('Connected to Socket.io server at', socketUrl);
     });
     
     this.socket.on('disconnect', () => {
