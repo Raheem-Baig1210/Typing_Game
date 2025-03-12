@@ -42,6 +42,7 @@ export default function TypingGame({ mode }: TypingGameProps) {
   const [survivalWords, setSurvivalWords] = useState<string[]>([]);
   const [wordTimeouts, setWordTimeouts] = useState<{ [key: string]: NodeJS.Timeout }>({});
   const [isCoachOpen, setIsCoachOpen] = useState(false);
+  const [showDebug, setShowDebug] = useState(false);
   
   // Set the game mode when the component mounts
   useEffect(() => {
@@ -53,17 +54,21 @@ export default function TypingGame({ mode }: TypingGameProps) {
     } else if (mode === 'survival') {
       initSurvivalMode();
     } else if (mode === 'custom') {
-      // Custom mode will use texts from the store
       initCustomMode();
     } else if (mode === 'multiplayer') {
       initMultiplayerMode();
     }
     
+    // Focus the input field when the component mounts
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+    
+    // Clean up when the component unmounts
     return () => {
-      // Clean up any timeouts or intervals
-      Object.values(wordTimeouts).forEach(timeout => clearTimeout(timeout));
+      resetGame();
     };
-  }, [mode]);
+  }, [mode, setGameMode, resetGame]);
   
   // Focus the input field when the game starts
   useEffect(() => {
@@ -87,19 +92,29 @@ export default function TypingGame({ mode }: TypingGameProps) {
     };
   }, [isPlaying, isPaused, isGameOver]);
   
-  // Handle countdown
+  // Countdown effect
   useEffect(() => {
     if (countdown === null) return;
     
+    console.log(`Countdown: ${countdown}`);
+    
     if (countdown > 0) {
       const timer = setTimeout(() => {
-        setCountdown(prev => prev !== null ? prev - 1 : null);
+        setCountdown(countdown - 1);
       }, 1000);
       
       return () => clearTimeout(timer);
     } else {
+      console.log("Countdown finished, starting game...");
       startGame(currentText);
       setCountdown(null);
+      
+      // Focus the input field after the countdown
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }, 100);
     }
   }, [countdown, startGame, currentText]);
   
@@ -107,12 +122,15 @@ export default function TypingGame({ mode }: TypingGameProps) {
   const initClassicMode = () => {
     const text = getRandomText();
     useGameStore.setState({ currentText: text });
+    console.log("Classic mode initialized with text:", text);
   };
   
   const initSurvivalMode = () => {
     const words = getWordList(20);
     setSurvivalWords(words);
-    useGameStore.setState({ currentText: words.join(' ') });
+    const text = words.join(' ');
+    useGameStore.setState({ currentText: text });
+    console.log("Survival mode initialized with words:", words);
   };
   
   const initCustomMode = () => {
@@ -120,16 +138,23 @@ export default function TypingGame({ mode }: TypingGameProps) {
     const { customTexts } = useGameStore.getState();
     const text = customTexts.length > 0 ? customTexts[0] : getRandomText();
     useGameStore.setState({ currentText: text });
+    console.log("Custom mode initialized with text:", text);
   };
   
   const initMultiplayerMode = () => {
     // For now, just use a random text. In a real implementation, this would be synchronized with other players
     const text = getRandomText();
     useGameStore.setState({ currentText: text });
+    console.log("Multiplayer mode initialized with text:", text);
   };
   
   // Start the game with a countdown
   const handleStartGame = () => {
+    console.log("Starting game with countdown...");
+    // Make sure the input field is focused
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
     setCountdown(3);
   };
   
@@ -376,14 +401,61 @@ export default function TypingGame({ mode }: TypingGameProps) {
     );
   };
   
+  // Add a click handler to the game container to refocus the input
+  const handleContainerClick = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+  
+  // Toggle debug mode
+  const toggleDebug = () => {
+    setShowDebug(!showDebug);
+  };
+  
+  // Debug information
+  const renderDebug = () => {
+    if (!showDebug) return null;
+    
+    return (
+      <div className="debug-info mt-8 p-4 bg-gray-100 dark:bg-dark-200 rounded-lg text-sm">
+        <h3 className="font-bold mb-2">Debug Info:</h3>
+        <pre className="whitespace-pre-wrap">
+          {JSON.stringify({
+            gameMode,
+            isPlaying,
+            isPaused,
+            isGameOver,
+            currentText: currentText ? `${currentText.substring(0, 20)}...` : null,
+            userInput: userInput ? `${userInput.substring(0, 20)}...` : null,
+            position,
+            errors,
+            wpm,
+            accuracy,
+            countdown,
+          }, null, 2)}
+        </pre>
+      </div>
+    );
+  };
+  
   return (
-    <div className="typing-game relative max-w-4xl mx-auto p-4">
+    <div className="typing-game relative max-w-4xl mx-auto p-4" onClick={handleContainerClick}>
       <h1 className="text-3xl font-bold mb-6 text-center">
         {mode === 'classic' && 'Classic Mode'}
         {mode === 'survival' && 'Survival Mode'}
         {mode === 'custom' && 'Custom Mode'}
         {mode === 'multiplayer' && 'Multiplayer Mode'}
       </h1>
+      
+      <div className="absolute top-4 right-4">
+        <button 
+          onClick={toggleDebug} 
+          className="text-xs bg-gray-200 dark:bg-dark-300 px-2 py-1 rounded"
+        >
+          {showDebug ? 'Hide Debug' : 'Show Debug'}
+        </button>
+      </div>
       
       {renderStats()}
       {renderControls()}
@@ -399,7 +471,7 @@ export default function TypingGame({ mode }: TypingGameProps) {
             type="text"
             value={userInput}
             onChange={handleInputChange}
-            className="input w-full"
+            className="input w-full p-3 text-lg border-2 border-primary-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-dark-200 dark:border-primary-700 dark:text-white"
             placeholder="Start typing..."
             disabled={!isPlaying || isPaused || isGameOver}
             autoFocus
@@ -407,10 +479,11 @@ export default function TypingGame({ mode }: TypingGameProps) {
         </div>
       )}
       
-      {renderGameOver()}
-      {renderCountdown()}
+      {isGameOver && renderGameOver()}
+      {countdown !== null && renderCountdown()}
+      {isCoachOpen && <TypingCoach onClose={() => setIsCoachOpen(false)} />}
       
-      <TypingCoach isOpen={isCoachOpen} onClose={() => setIsCoachOpen(false)} />
+      {renderDebug()}
     </div>
   );
 } 

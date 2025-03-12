@@ -22,7 +22,6 @@ export const metadata: Metadata = {
   keywords: ['typing game', 'typing practice', 'typing speed', 'wpm', 'typing test', 'multiplayer typing'],
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: '32x32', type: 'image/x-icon' },
       { url: '/favicon.svg', type: 'image/svg+xml' },
       { url: '/app-icon.svg', sizes: '512x512', type: 'image/svg+xml' }
     ],
@@ -43,7 +42,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${robotoMono.variable}`}>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="32x32" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/app-icon.svg" />
         <link rel="manifest" href="/manifest.json" />

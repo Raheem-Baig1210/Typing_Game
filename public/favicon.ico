@@ -9,3 +9,14 @@ please use one of the following methods to create a proper favicon.ico:
 
 Until then, this placeholder file will be used, but browsers may not display it correctly.
 --> 
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="refresh" content="0; url=/favicon.svg">
+  <title>Redirecting to SVG favicon</title>
+</head>
+<body>
+  Redirecting to <a href="/favicon.svg">SVG favicon</a>...
+</body>
+</html> 
